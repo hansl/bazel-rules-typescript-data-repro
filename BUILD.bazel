@@ -1,0 +1,26 @@
+package(default_visibility = ["//visibility:public"])
+
+load("@build_bazel_rules_typescript//:defs.bzl", "ts_library")
+load("@build_bazel_rules_nodejs//:defs.bzl", "jasmine_node_test")
+
+filegroup(
+    name = "node_modules",
+    srcs = glob(["node_modules/**/*"]),
+)
+
+ts_library(
+    name = "lib",
+    srcs = glob([ "src/**/*.ts" ]),
+)
+
+jasmine_node_test(
+    name = "spec",
+    srcs = glob([ "src/**/*.js" ]),
+    deps = [
+        ":lib",
+    ],
+    data = [
+        "src/data.json",
+    ],
+)
+
